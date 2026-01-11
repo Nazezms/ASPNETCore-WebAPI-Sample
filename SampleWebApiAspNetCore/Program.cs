@@ -1,4 +1,5 @@
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -36,8 +37,11 @@ builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddVersioning();
 
+/*builder.Services.AddDbContext<FoodDbContext>(opt =>
+    opt.UseInMemoryDatabase("FoodDatabase"));*/
+
 builder.Services.AddDbContext<FoodDbContext>(opt =>
-    opt.UseInMemoryDatabase("FoodDatabase"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddMapster();
 
